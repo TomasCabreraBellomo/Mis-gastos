@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mis Gastos</title>
+<meta name="theme-color" content="#0f766e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="month-bar">
+    <button id="prev" aria-label="Mes anterior">◀</button>
+    <h1 id="monthLabel">—</h1>
+    <button id="next" aria-label="Mes siguiente">▶</button>
+  </div>
+  <div class="cards">
+    <div class="card"><span>Ingresos</span><strong id="sumIn" class="pos">$0</strong></div>
+    <div class="card"><span>Gastos</span><strong id="sumOut" class="neg">$0</strong></div>
+    <div class="card"><span>Balance</span><strong id="sumBal">$0</strong></div>
+  </div>
+  <nav class="tabs">
+    <button data-tab="list" class="active">Movimientos</button>
+    <button data-tab="summary">Resumen</button>
+  </nav>
+</header>
+
+<main>
+  <section id="tab-list">
+    <div id="list"></div>
+    <p id="empty" class="muted" hidden>No hay movimientos este mes. Tocá “+” para agregar uno.</p>
+  </section>
+
+  <section id="tab-summary" hidden>
+    <h2>Gastos por categoría</h2>
+    <div class="chart-box"><canvas id="pieChart"></canvas></div>
+    <p id="pieEmpty" class="muted" hidden>Sin gastos este mes.</p>
+    <ul id="catList" class="breakdown"></ul>
+
+    <h2>Por medio de pago (gastos)</h2>
+    <ul id="payList" class="breakdown"></ul>
+
+    <h2>Últimos 6 meses</h2>
+    <div class="chart-box"><canvas id="barChart"></canvas></div>
+
+    <h2>Datos</h2>
+    <div class="data-actions">
+      <button id="exportJson">Exportar respaldo (JSON)</button>
+      <button id="exportCsv">Exportar CSV</button>
+      <button id="importBtn">Importar respaldo</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+    <p class="muted">Tus datos se guardan solo en este dispositivo. Exportá un respaldo de vez en cuando.</p>
+  </section>
+</main>
+
+<button id="fab" aria-label="Agregar movimiento">+</button>
+
+<dialog id="dlg">
+  <form id="form" method="dialog">
+    <h2 id="dlgTitle">Nuevo movimiento</h2>
+    <div class="seg" id="tipoSeg">
+      <label><input type="radio" name="tipo" value="gasto" checked><span>Gasto</span></label>
+      <label><input type="radio" name="tipo" value="ingreso"><span>Ingreso</span></label>
+    </div>
+    <label>Monto
+      <input type="number" id="monto" inputmode="decimal" step="0.01" min="0.01" required placeholder="0.00">
+    </label>
+    <label>Categoría
+      <select id="categoria" required></select>
+    </label>
+    <div class="seg" id="pagoSeg">
+      <label><input type="radio" name="pago" value="efectivo" checked><span>Efectivo</span></label>
+      <label><input type="radio" name="pago" value="debito"><span>Débito</span></label>
+      <label><input type="radio" name="pago" value="credito"><span>Crédito</span></label>
+    </div>
+    <label>Fecha
+      <input type="date" id="fecha" required>
+    </label>
+    <label>Nota (opcional)
+      <input type="text" id="nota" maxlength="80" placeholder="Ej: supermercado">
+    </label>
+    <div class="actions">
+      <button type="button" id="delBtn" class="danger" hidden>Eliminar</button>
+      <button type="button" id="cancelBtn">Cancelar</button>
+      <button type="submit" class="primary">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
