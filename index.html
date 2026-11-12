@@ -31,12 +31,27 @@
 </header>
 
 <main>
+  <div class="data-actions import-toolbar"><button id="importCsvBtn">Importar CSV</button></div>
+  <p id="importStatus" class="muted" role="status" hidden></p>
   <section id="tab-list">
     <div id="list"></div>
     <p id="empty" class="muted" hidden>No hay movimientos este mes. Tocá “+” para agregar uno.</p>
   </section>
 
   <section id="tab-summary" hidden>
+    <h2>Comparación con el mes anterior</h2>
+    <div class="card comparison-card">
+      <span id="comparisonPeriod"></span>
+      <strong id="monthDifference"></strong>
+      <p id="comparisonNote" class="muted"></p>
+    </div>
+    <details id="detailComparison">
+      <summary>Comparar por detalle</summary>
+      <p class="muted">Se suman los gastos con el mismo detalle (o categoría si no tienen nota). Los nombres diferentes se muestran por separado.</p>
+      <div class="table-scroll" role="region" aria-label="Comparación de gastos por detalle" tabindex="0">
+        <table><thead><tr><th>Detalle</th><th>Mes anterior</th><th>Este mes</th><th>Diferencia</th><th>%</th></tr></thead><tbody id="comparisonRows"></tbody></table>
+      </div>
+    </details>
     <h2>Gastos por categoría</h2>
     <div class="chart-box"><canvas id="pieChart"></canvas></div>
     <p id="pieEmpty" class="muted" hidden>Sin gastos este mes.</p>
@@ -78,10 +93,12 @@
       <label><input type="radio" name="pago" value="efectivo" checked><span>Efectivo</span></label>
       <label><input type="radio" name="pago" value="debito"><span>Débito</span></label>
       <label><input type="radio" name="pago" value="credito"><span>Crédito</span></label>
+      <label><input type="radio" name="pago" value="sin_especificar"><span>Sin especificar</span></label>
     </div>
     <label>Fecha
       <input type="date" id="fecha" required>
     </label>
+    <label class="check-label"><input type="checkbox" id="periodoMensual"> Solo conozco el mes (sin día exacto)</label>
     <label>Nota (opcional)
       <input type="text" id="nota" maxlength="80" placeholder="Ej: supermercado">
     </label>
@@ -93,7 +110,35 @@
   </form>
 </dialog>
 
+<dialog id="csvDlg" aria-labelledby="csvTitle">
+  <form id="csvForm">
+    <h2 id="csvTitle">Importar CSV</h2>
+    <p class="muted">Agregá gastos desde una planilla anual con meses y columnas Detalle/Importe, o desde una tabla con Fecha, Detalle e Importe. También podés importar el CSV exportado por esta app.</p>
+    <label>Archivo CSV<input type="file" id="csvFile" accept=".csv,text/csv" required></label>
+    <label id="csvYearField">Año de la planilla<input type="number" id="csvYear" min="1900" max="9999" step="1" required></label>
+    <p id="csvError" class="neg" role="alert" hidden></p>
+    <div id="csvPreview" hidden>
+      <p id="csvCounts" role="status"></p>
+      <p id="csvRules" class="muted"></p>
+      <ul id="csvMonths" class="breakdown"></ul>
+      <details><summary>Ver movimientos a importar</summary>
+        <div class="table-scroll preview-scroll" role="region" aria-label="Movimientos a importar" tabindex="0">
+          <table><thead><tr><th>Período</th><th>Detalle</th><th>Importe</th></tr></thead><tbody id="csvRows"></tbody></table>
+        </div>
+      </details>
+      <details id="csvIssues" hidden><summary id="csvIssuesTitle"></summary><ul id="csvIssueList" class="muted"></ul></details>
+      <label id="csvPartialLabel" class="check-label" hidden><input type="checkbox" id="csvPartial"> Importar solo los registros válidos y omitir los errores indicados.</label>
+      <p class="muted">Se conservan tus movimientos actuales y se omiten los que ya estén registrados. Los importes se redondean a centavos.</p>
+    </div>
+    <div class="actions">
+      <button type="button" id="csvCancel">Cancelar</button>
+      <button type="submit" id="csvConfirm" class="primary" disabled>Importar</button>
+    </div>
+  </form>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="csv.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
