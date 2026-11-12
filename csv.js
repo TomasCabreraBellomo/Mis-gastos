@@ -10,7 +10,7 @@
       'arreglos', 'SAT', 'Productos de Limpieza', 'futbol', 'extras',
       'Facultad y capacitaciones', 'Postres y helado', 'Panadería', 'Netflix', 'spotify',
       'Naturgy', 'Chatgpt', 'Forrajeria', 'Naranja x mantenimiento', 'Jetsmart',
-      'Viajes salta', 'Gimnasio', 'Otros'
+      'Viajes', 'Viajes salta', 'Gimnasio', 'Otros'
     ],
     ingreso: ['Sueldo', 'Extra', 'Regalo', 'Otros']
   };
