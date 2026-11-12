@@ -3,7 +3,15 @@
 
   const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const CATEGORIES = {
-    gasto: ['Comida', 'Transporte', 'Hogar', 'Salud', 'Ocio', 'Educación', 'Ropa', 'Servicios', 'Otros'],
+    gasto: [
+      'Comida', 'Transporte', 'Hogar', 'Salud', 'Ocio', 'Educación', 'Ropa', 'Servicios',
+      'Electrodomésticos', 'supermercado', 'expensas', 'Delivery', 'Salidas', 'regalos',
+      'Bazar', 'Claro', 'Colaboración', 'Farmacia', 'seguros', 'Uber', 'verduleria y huevos',
+      'arreglos', 'SAT', 'Productos de Limpieza', 'futbol', 'extras',
+      'Facultad y capacitaciones', 'Postres y helado', 'Panadería', 'Netflix', 'spotify',
+      'Naturgy', 'Chatgpt', 'Forrajeria', 'Naranja x mantenimiento', 'Jetsmart',
+      'Viajes salta', 'Gimnasio', 'Otros'
+    ],
     ingreso: ['Sueldo', 'Extra', 'Regalo', 'Otros']
   };
   const PAYMENTS = { efectivo: 'efectivo', debito: 'debito', credito: 'credito', 'sin especificar': 'sin_especificar', sin_especificar: 'sin_especificar' };
